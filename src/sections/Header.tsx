@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { VscMenu } from "react-icons/vsc";
 import { menu } from "../assets/contants";
 import { CiSettings } from "react-icons/ci";
+import { CgMenu } from "react-icons/cg";
 
-const Header = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
+const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStateAction<boolean>>,showMenu:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
   return (
     <motion.header
@@ -30,9 +28,9 @@ const Header = () => {
             </a>
             <button
               className="lg:hidden block"
-              onClick={() => setMenuOpen((prev) => !prev)}
+              onClick={() => showMenu(true)}
             >
-              <VscMenu size={30} />
+              <CgMenu size={30} />
             </button>
           </motion.li>
 
@@ -55,26 +53,9 @@ const Header = () => {
             ))}
           </motion.li>
 
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <motion.div
-              className="lg:hidden absolute top-16 left-0 right-0 bg-white shadow-lg p-4 rounded-lg"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ul className="flex flex-col gap-3">
-                {menu.map((item) => (
-                  <li key={item.label} className="text-lg font-bold">
-                    <a href={item.url}>{item.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          )}
-
           {/* Dark Mode Switch */}
           <motion.button
+          onClick={()=>showSetting(true)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
